@@ -2,13 +2,16 @@ import sys
 import usb.core
 import readline
 if sys.version[0] != 3:
-	print("Please run this script in Python 3")
+	print("although this script works in Python 2 it will be unsupported for this script and will only use Python 3")
 dev = usb.core.find(idVendor=0x05ac, idProduct=0x4141)
 if dev is None:
     raise ValueError('Device not found')
 dev.set_configuration()
 while True:  # making a loop
-	c = input("$:")
+	if sys.version[0] == 3:
+		c = input("$:")
+	elif sys.version[0] == 2:
+		c = raw_input("$:")
 	if "/" == c[0]:
 		if c.split("/")[1].split(" ")[0] == "load":
 			data = open(c.split(" ")[1], "rb").read()
